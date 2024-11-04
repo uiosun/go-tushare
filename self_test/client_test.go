@@ -40,6 +40,19 @@ type FiledMapping struct {
 	trans   string
 }
 
+func TestIndexDaily(t *testing.T) {
+	share := client.New(getToken())
+	params := make(map[string]string)
+	params["ts_code"] = "000300.SH"
+	data, err := share.IndexDaily(params)
+	if err != nil {
+		t.Error(err)
+	}
+	if len(data.Data.Fields) != 11 {
+		t.Errorf("fields count not has %d pieces", len(data.Data.Items))
+	}
+}
+
 func TestStkMins(t *testing.T) {
 	share := client.New(getToken())
 	params := make(map[string]string)

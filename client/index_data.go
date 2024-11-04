@@ -1,5 +1,16 @@
 package client
 
+// IndexDaily 指数日线行情
+func (api *TuShare) IndexDaily(params map[string]string) (*APIResponse, error) {
+	body := map[string]interface{}{
+		"api_name": "index_daily",
+		"token":    api.token,
+		"params":   params,
+	}
+
+	return api.postData(body)
+}
+
 // IndexClassify 获取申万行业分类
 func (api *TuShare) IndexClassify(params map[string]string, fields []string) (*APIResponse, error) {
 	body := map[string]interface{}{
@@ -15,7 +26,7 @@ func (api *TuShare) IndexClassify(params map[string]string, fields []string) (*A
 // IndexMember 获取申万行业成分构成
 func (api *TuShare) IndexMember(params map[string]string, fields []string) (*APIResponse, error) {
 	body := map[string]interface{}{
-		"api_name": "index_member",
+		"api_name": "index_member_all",
 		"token":    api.token,
 		"params":   params,
 		"fields":   fields,
