@@ -49,7 +49,35 @@ func TestIndexDaily(t *testing.T) {
 		t.Error(err)
 	}
 	if len(data.Data.Fields) != 11 {
-		t.Errorf("fields count not has %d pieces", len(data.Data.Items))
+		t.Errorf("fields count not has %d pieces", len(data.Data.Fields))
+	}
+}
+
+func TestDaily(t *testing.T) {
+	share := client.New(getToken())
+	params := make(map[string]string)
+	params["ts_code"] = "000300.SH"
+	data, err := share.Daily(params, []string{})
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println(data.Data.Fields)
+	fmt.Println(data.Data.Fields[0])
+	if len(data.Data.Fields) != 11 {
+		t.Errorf("fields count not has %d pieces", len(data.Data.Fields))
+	}
+}
+
+func TestStkLimit(t *testing.T) {
+	share := client.New(getToken())
+	params := make(map[string]string)
+	params["ts_code"] = "002269.SZ"
+	data, err := share.StkLimit(params)
+	if err != nil {
+		t.Error(err)
+	}
+	if len(data.Data.Fields) != 4 {
+		t.Errorf("fields count not has %d pieces", len(data.Data.Fields))
 	}
 }
 

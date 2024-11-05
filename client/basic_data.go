@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// StockBasic 获取基础信息数据，包括股票代码、名称、上市日期、退市日期等
+// StockBasic 股票基础信息，包括股票代码、名称、上市日期、退市日期等
 func (api *TuShare) StockBasic(params map[string]string, fields []string) (*APIResponse, error) {
 	body := map[string]interface{}{
 		"api_name": "stock_basic",

@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// Daily 获取股票行情数据, 日线
+// Daily 获取股票行情数据，日线
 func (api *TuShare) Daily(params map[string]string, fields []string) (*APIResponse, error) {
 	// Check params
 	_, hasTsCode := params["ts_code"]
@@ -23,6 +23,24 @@ func (api *TuShare) Daily(params map[string]string, fields []string) (*APIRespon
 		"api_name": "daily",
 		"token":    api.token,
 		"fields":   fields,
+		"params":   params,
+	}
+
+	return api.postData(body)
+}
+
+// StkLimit 股票日涨跌停数据
+func (api *TuShare) StkLimit(params map[string]string) (*APIResponse, error) {
+	// ts_code & trade_date required
+	_, hasTsCode := params["ts_code"]
+	_, hasTradeDate := params["trade_date"]
+	if (!hasTsCode && !hasTradeDate) || (hasTsCode && hasTradeDate) {
+		return nil, ERR_ARGUEMENT
+	}
+
+	body := map[string]interface{}{
+		"api_name": "stk_limit",
+		"token":    api.token,
 		"params":   params,
 	}
 
