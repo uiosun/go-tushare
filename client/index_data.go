@@ -11,6 +11,17 @@ func (api *TuShare) IndexDaily(params map[string]string) (*APIResponse, error) {
 	return api.postData(body)
 }
 
+// SzDailyInfo 深圳市场每日交易概况
+func (api *TuShare) SzDailyInfo(params map[string]string) (*APIResponse, error) {
+	body := map[string]interface{}{
+		"api_name": "sz_daily_info",
+		"token":    api.token,
+		"params":   params,
+	}
+
+	return api.postData(body)
+}
+
 // IndexClassify 获取申万行业分类
 func (api *TuShare) IndexClassify(params map[string]string, fields []string) (*APIResponse, error) {
 	body := map[string]interface{}{
