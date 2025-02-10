@@ -18,7 +18,7 @@ func getToken() string {
 }
 
 func TestSzDailyInfo(t *testing.T) {
-	share := client.New(getToken())
+	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)
 	params["trade_date"] = "20200320"
 	data, err := share.SzDailyInfo(params)

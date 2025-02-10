@@ -20,7 +20,7 @@ func getToken() string {
 }
 
 func TestClient(t *testing.T) {
-	share := client.New(getToken())
+	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)
 	params["list_status"] = "L"
 	var fields []string
@@ -41,7 +41,7 @@ type FiledMapping struct {
 }
 
 func TestIndexDaily(t *testing.T) {
-	share := client.New(getToken())
+	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)
 	params["ts_code"] = "000300.SH"
 	data, err := share.IndexDaily(params)
@@ -54,7 +54,7 @@ func TestIndexDaily(t *testing.T) {
 }
 
 func TestDaily(t *testing.T) {
-	share := client.New(getToken())
+	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)
 	params["ts_code"] = "000300.SH"
 	data, err := share.Daily(params, []string{})
@@ -69,7 +69,7 @@ func TestDaily(t *testing.T) {
 }
 
 func TestStkLimit(t *testing.T) {
-	share := client.New(getToken())
+	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)
 	params["ts_code"] = "002269.SZ"
 	data, err := share.StkLimit(params)
@@ -82,7 +82,7 @@ func TestStkLimit(t *testing.T) {
 }
 
 func TestStkMins(t *testing.T) {
-	share := client.New(getToken())
+	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)
 	params["ts_code"] = "000005.SZ"
 	params["start_date"] = "2015-01-06 15:00:00"

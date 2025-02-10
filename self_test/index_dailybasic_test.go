@@ -7,7 +7,7 @@ import (
 )
 
 func TestIndexDailyBasic(t *testing.T) {
-	share := client.New(getToken())
+	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)
 	params["trade_date"] = "20231229"
 	data, err := share.IndexDailyBasic(params)
