@@ -22,6 +22,17 @@ func (api *TuShare) IndexWeight(params map[string]string) (*APIResponse, error) 
 	return api.postData(body)
 }
 
+// IndexDailyBasic 大盘指数每日指标
+func (api *TuShare) IndexDailyBasic(params map[string]string) (*APIResponse, error) {
+	body := map[string]interface{}{
+		"api_name": "index_dailybasic",
+		"token":    api.token,
+		"params":   params,
+	}
+
+	return api.postData(body)
+}
+
 // SzDailyInfo 深圳市场每日交易概况
 func (api *TuShare) SzDailyInfo(params map[string]string) (*APIResponse, error) {
 	body := map[string]interface{}{
