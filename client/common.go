@@ -10,7 +10,8 @@ const (
 )
 
 var (
-	ERR_PERMISSION  = fmt.Errorf("your token has no permission to use this api")
-	ERR_ARGUEMENT   = fmt.Errorf("argurment error")
-	ERR_DATE_FORMAT = fmt.Errorf("please input right date format YYYYMMDD")
+	ERR_PERMISSION        = fmt.Errorf("your token has no permission to use this api")
+	ERR_ARGUEMENT         = fmt.Errorf("argurment error")
+	ERR_DATE_FORMAT       = fmt.Errorf("please input right date format YYYYMMDD")
+	ERR_TOO_MANY_REQUESTS = fmt.Errorf("the client has sent too many requests")
 )
