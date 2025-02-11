@@ -17,7 +17,7 @@ type TuShare struct {
 }
 
 type TuShareConfig struct {
-	autoWaitRateLimit bool // 在流控触发时，不报错，自动等待流控
+	AutoWaitRateLimit bool // 在流控触发时，不报错，自动等待流控
 	RateLimit         bool // 由 SDK 负责流控
 	RateLimitMinute   int  // 每分钟最大请求数
 }
@@ -82,7 +82,7 @@ func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 	case -2002:
 		return result, ERR_PERMISSION
 	case 40203:
-		if api.config.autoWaitRateLimit {
+		if api.config.AutoWaitRateLimit {
 			time.Sleep(61 * time.Second)
 		}
 		return result, ERR_TOO_MANY_REQUESTS
