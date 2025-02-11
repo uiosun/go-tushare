@@ -107,6 +107,10 @@ func main()  {
 - [x] 股票复权因子(`adj_factor`)
 - [x] 股票每日停复牌信息(`suspend`)
 
+## 快速更新
+
+基于 Go 镜像库对包有缓存机制，必要时，使用 `GONOPROXY=github.com/uiosun/go-tushare go get github.com/uiosun/go-tushare` 追踪瞬时更新。
+
 ## 致谢
 
 > 本项目基于 yushikuann/go-tushare-sdk，由于未来需要快速更新，单独创建项目。
