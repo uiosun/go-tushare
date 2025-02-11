@@ -6,6 +6,18 @@
 
 主要是对 TuShare 接口的 Go 封装。
 
+### 流控
+
+对于 TuShare 的流控，本 SDK 涵盖了流控时暂停的情况，但不会重置流控，推荐自行在实例外，通过协程调用 `api.ResetRateLimit()` 重置流控：
+
+```go
+token := ""
+api := tushare.New(token)
+go func() {
+    api.ResetRateLimit() // 这将自动每分钟重置流控
+}()
+```
+
 ### 使用样例
 
 如对具体接口有疑问，请参考接口注释、测试用例。

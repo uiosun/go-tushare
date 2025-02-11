@@ -40,6 +40,25 @@ type FiledMapping struct {
 	trans   string
 }
 
+func TestTooManyRequest(t *testing.T) {
+	share := client.New(getToken(), &client.TuShareConfig{
+		RateLimit:       true,
+		RateLimitMinute: 500,
+	})
+	for i := 0; i < 1000; i++ {
+		if i%10 == 0 {
+			fmt.Println(i)
+		}
+		params := make(map[string]string)
+		params["ts_code"] = "000300.SH"
+		params["limit"] = "1"
+		_, err := share.IndexDaily(params)
+		if err != nil {
+			t.Error(err)
+		}
+	}
+}
+
 func TestIndexDaily(t *testing.T) {
 	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)

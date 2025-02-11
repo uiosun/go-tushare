@@ -13,7 +13,6 @@ type TuShare struct {
 	token        string
 	client       *http.Client
 	config       TuShareConfig
-	minute       int // 本分钟数
 	requestCount int // 本分钟请求数
 }
 
@@ -27,11 +26,18 @@ func New(token string, config *TuShareConfig) *TuShare {
 }
 
 func NewWithClient(token string, httpClient *http.Client, config *TuShareConfig) *TuShare {
-	return &TuShare{
+	api := &TuShare{
 		token:  token,
 		client: httpClient,
 		config: *config,
 	}
+	return api
+}
+
+// ResetRateLimit 重置流控
+func (api *TuShare) ResetRateLimit() {
+	time.Sleep(60 * time.Second)
+	api.requestCount = 0
 }
 
 func (api *TuShare) request(method, path string, body interface{}) (*http.Request, error) {
@@ -85,12 +91,8 @@ func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 
 func (api *TuShare) postData(body map[string]interface{}) (*APIResponse, error) {
 	if api.config.RateLimit {
-		if api.minute != time.Now().Minute() {
-			api.minute = time.Now().Minute()
-			api.requestCount = 0
-		}
 		if api.requestCount >= api.config.RateLimitMinute {
-			time.Sleep(time.Duration(60-time.Now().Second()+1) * time.Second)
+			time.Sleep(61 * time.Second)
 		} else {
 			api.requestCount++
 		}
