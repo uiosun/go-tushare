@@ -83,7 +83,12 @@ func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 		return result, ERR_PERMISSION
 	case 40203:
 		if api.config.AutoWaitRateLimit {
-			time.Sleep(61 * time.Second)
+			time.Sleep(50 * time.Second)
+			result, err := api.doRequest(req)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
 		}
 		return result, ERR_TOO_MANY_REQUESTS
 	case 0:
