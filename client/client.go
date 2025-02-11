@@ -95,11 +95,7 @@ func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 
 func (api *TuShare) postData(body map[string]interface{}) (*APIResponse, error) {
 	if api.config.RateLimit {
-		if api.requestCount >= api.config.RateLimitMinute {
-			time.Sleep(61 * time.Second)
-		} else {
-			api.requestCount++
-		}
+		api.requestCount++
 	}
 	req, err := api.request(PostMethod, Domain, body)
 	if err != nil {
