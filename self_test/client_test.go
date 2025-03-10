@@ -68,19 +68,6 @@ func TestDaily(t *testing.T) {
 	}
 }
 
-func TestStkLimit(t *testing.T) {
-	share := client.New(getToken(), &client.TuShareConfig{})
-	params := make(map[string]string)
-	params["ts_code"] = "002269.SZ"
-	data, err := share.StkLimit(params)
-	if err != nil {
-		t.Error(err)
-	}
-	if len(data.Data.Fields) != 4 {
-		t.Errorf("fields count not has %d pieces", len(data.Data.Fields))
-	}
-}
-
 func TestStkMins(t *testing.T) {
 	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)

@@ -27,17 +27,17 @@ func (api *TuShare) Daily(params map[string]string, fields []string) (*APIRespon
 
 // StkLimit 股票日涨跌停数据
 func (api *TuShare) StkLimit(params map[string]string) (*APIResponse, error) {
-	// ts_code & trade_date required
-	_, hasTsCode := params["ts_code"]
-	_, hasTradeDate := params["trade_date"]
-	if (!hasTsCode && !hasTradeDate) || (hasTsCode && hasTradeDate) {
-		return nil, ERR_ARGUEMENT
-	}
-
 	body := map[string]interface{}{
 		"api_name": "stk_limit",
 		"token":    api.token,
 		"params":   params,
+		"fields": []string{
+			"trade_date",
+			"ts_code",
+			"pre_close",
+			"up_limit",
+			"down_limit",
+		},
 	}
 
 	return api.postData(body)
