@@ -93,7 +93,16 @@ func (api *TuShare) ThsIndex(params map[string]string, fields []string) (*APIRes
 }
 
 // ThsMember 同花顺概念板块成分
-func (api *TuShare) ThsMember(params map[string]string, fields []string) (*APIResponse, error) {
+func (api *TuShare) ThsMember(params map[string]string) (*APIResponse, error) {
+	fields := []string{
+		"ts_code",
+		"con_code",
+		"con_name",
+		"weight",
+		"in_date",
+		"out_date",
+		"is_new",
+	}
 	body := map[string]interface{}{
 		"api_name": "ths_member",
 		"token":    api.token,

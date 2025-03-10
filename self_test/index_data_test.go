@@ -75,3 +75,33 @@ func TestKplConceptCons(t *testing.T) {
 		fmt.Println(data.Data.Fields)
 	}
 }
+
+func TestThsIndex(t *testing.T) {
+	share := client.New(getToken(), &client.TuShareConfig{})
+	params := make(map[string]string)
+	params["trade_date"] = "20250306"
+	data, err := share.ThsIndex(params, []string{})
+	if err != nil {
+		t.Error(err)
+	}
+	// [ts_code name count exchange list_date type]
+	if len(data.Data.Fields) != 6 {
+		t.Errorf("fields count not has %d pieces", len(data.Data.Fields))
+		fmt.Println(data.Data.Fields)
+	}
+}
+
+func TestThsMember(t *testing.T) {
+	share := client.New(getToken(), &client.TuShareConfig{})
+	params := make(map[string]string)
+	params["trade_date"] = "20250306"
+	data, err := share.ThsMember(params)
+	if err != nil {
+		t.Error(err)
+	}
+	// [ts_code con_code con_name weight in_date out_date is_new]
+	if len(data.Data.Fields) != 7 {
+		t.Errorf("fields count not has %d pieces", len(data.Data.Fields))
+		fmt.Println(data.Data.Fields)
+	}
+}
