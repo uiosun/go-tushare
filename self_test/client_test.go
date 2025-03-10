@@ -80,8 +80,7 @@ func TestDaily(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	fmt.Println(data.Data.Fields)
-	fmt.Println(data.Data.Fields[0])
+	// [ts_code trade_date open high low close pre_close change pct_chg vol amount]
 	if len(data.Data.Fields) != 11 {
 		t.Errorf("fields count not has %d pieces", len(data.Data.Fields))
 	}
