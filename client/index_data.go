@@ -115,3 +115,36 @@ func (api *TuShare) ThsDaily(params map[string]string, fields []string) (*APIRes
 
 	return api.postData(body)
 }
+
+// KplConcept 开盘啦题材库
+func (api *TuShare) KplConcept(params map[string]string) (*APIResponse, error) {
+	body := map[string]interface{}{
+		"api_name": "kpl_concept",
+		"token":    api.token,
+		"params":   params,
+	}
+
+	return api.postData(body)
+}
+
+// KplConceptCons 开盘啦题材成分
+func (api *TuShare) KplConceptCons(params map[string]string) (*APIResponse, error) {
+	body := map[string]interface{}{
+		"api_name": "kpl_concept_cons",
+		"token":    api.token,
+		"params":   params,
+	}
+
+	return api.postData(body)
+}
+
+// KplList 开盘啦题材成分
+func (api *TuShare) KplList(params map[string]string) (*APIResponse, error) {
+	body := map[string]interface{}{
+		"api_name": "kpl_list",
+		"token":    api.token,
+		"params":   params,
+	}
+
+	return api.postData(body)
+}
