@@ -5,7 +5,26 @@ import (
 )
 
 // StockBasic 股票基础信息，包括股票代码、名称、上市日期、退市日期等
-func (api *TuShare) StockBasic(params map[string]string, fields []string) (*APIResponse, error) {
+func (api *TuShare) StockBasic(params map[string]string) (*APIResponse, error) {
+	fields := []string{
+		"ts_code",
+		"symbol",
+		"name",
+		"area",
+		"industry",
+		"fullname",
+		"enname",
+		"cnspell",
+		"market",
+		"exchange",
+		"curr_type",
+		"list_status",
+		"list_date",
+		"delist_date",
+		"is_hs",
+		"act_name",
+		"act_ent_type",
+	}
 	body := map[string]interface{}{
 		"api_name": "stock_basic",
 		"token":    api.token,
