@@ -1,9 +1,5 @@
 package client
 
-import (
-	"fmt"
-)
-
 // Daily 获取股票行情数据，日线
 func (api *TuShare) Daily(params map[string]string, fields []string) (*APIResponse, error) {
 	// Check params
@@ -148,36 +144,10 @@ func (api *TuShare) AdjFactor(params map[string]string, fields []string) (*APIRe
 }
 
 // Suspend 获取股票每日停复牌信息
-func (api *TuShare) Suspend(params map[string]string, fields []string) (*APIResponse, error) {
-	// Check params
-	_, hasTsCode := params["ts_code"]
-	_, hasTradeDate := params["suspend_date"]
-	_, hasResumeDate := params["resume_date"]
-
-	// ts_code & trade_date & resume_date only required
-	argsCount := 0
-	if hasTsCode {
-		argsCount++
-	}
-	if hasTradeDate {
-		argsCount++
-	}
-	if hasResumeDate {
-		argsCount++
-	}
-
-	if argsCount != 1 {
-		return nil, fmt.Errorf("Need one argument among ts_code, suspend_date, resume_date")
-	}
-
-	if dateFormat := IsDateFormat(params["suspend_date"], params["resume_date"]); !dateFormat {
-		return nil, ERR_DATE_FORMAT
-	}
-
+func (api *TuShare) Suspend(params map[string]string) (*APIResponse, error) {
 	body := map[string]interface{}{
-		"api_name": "suspend",
+		"api_name": "suspend_d",
 		"token":    api.token,
-		"fields":   fields,
 		"params":   params,
 	}
 
