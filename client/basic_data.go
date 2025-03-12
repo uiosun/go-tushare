@@ -35,6 +35,33 @@ func (api *TuShare) StockBasic(params map[string]string) (*APIResponse, error) {
 	return api.postData(body)
 }
 
+// IndexBasic 指数基本信息
+func (api *TuShare) IndexBasic(params map[string]string) (*APIResponse, error) {
+	fields := []string{
+		"ts_code",
+		"name",
+		"fullname",
+		"market",
+		"publisher",
+		"index_type",
+		"category",
+		"base_date",
+		"base_point",
+		"list_date",
+		"weight_rule",
+		"desc",
+		"exp_date",
+	}
+	body := map[string]interface{}{
+		"api_name": "index_basic",
+		"token":    api.token,
+		"params":   params,
+		"fields":   fields,
+	}
+
+	return api.postData(body)
+}
+
 // TradeCal 获取各大交易所交易日历数据,默认提取的是上交所
 func (api *TuShare) TradeCal(params map[string]string, fields []string) (*APIResponse, error) {
 	body := map[string]interface{}{

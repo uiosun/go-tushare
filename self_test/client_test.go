@@ -71,14 +71,18 @@ func TestDaily(t *testing.T) {
 func TestStkMins(t *testing.T) {
 	share := client.New(getToken(), &client.TuShareConfig{})
 	params := make(map[string]string)
-	params["ts_code"] = "000005.SZ"
-	params["start_date"] = "2015-01-06 15:00:00"
-	params["end_date"] = "2015-06-01 15:00:00"
+	params["ts_code"] = "000001.SZ"
+	params["start_date"] = "2004-03-12 00:27:11"
+	params["end_date"] = "2009-04-11 00:27:11"
 	params["freq"] = "1min"
 	params["limit"] = "5"
-	data, err := share.StkMins(params, []string{})
+	data, err := share.StkMins(params)
 	if err != nil {
 		t.Error(err)
+	}
+	// [ts_code trade_time close open high low vol amount]
+	if len(data.Data.Fields) != 8 {
+		t.Errorf("fields count not has %d pieces, %s", len(data.Data.Fields), data.Data.Fields)
 	}
 	if len(data.Data.Items) != 5 {
 		t.Errorf("data count not has %d pieces", len(data.Data.Items))

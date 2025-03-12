@@ -20,3 +20,18 @@ func TestStockBasic(t *testing.T) {
 		fmt.Println(data.Data.Fields)
 	}
 }
+
+func TestIndexBasic(t *testing.T) {
+	share := client.New(getToken(), &client.TuShareConfig{})
+	params := make(map[string]string)
+	data, err := share.IndexBasic(params)
+	if err != nil {
+		t.Error(err)
+	}
+
+	// [ts_code name fullname market publisher index_type category base_date base_point list_date weight_rule desc exp_date]
+	if len(data.Data.Fields) != 13 {
+		t.Errorf("fields count not has %d pieces: %s", len(data.Data.Fields), data.Data.Fields)
+		fmt.Println(data.Data.Fields)
+	}
+}
