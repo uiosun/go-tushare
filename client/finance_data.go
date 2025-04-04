@@ -322,18 +322,35 @@ func (api *TuShare) CashFlow(params map[string]string, fields []string) (*APIRes
 }
 
 // Forecast 获取业绩预告数据
-func (api *TuShare) Forecast(params map[string]string, fields []string) (*APIResponse, error) {
-	// Check param
-	_, hasTsCode := params["ts_code"]
-	_, hasAnnDate := params["ann_date"]
-
-	// ts_code & ann_date required
-	if (!hasTsCode && !hasAnnDate) || (hasTsCode && hasAnnDate) {
-		return nil, ERR_ARGUEMENT
+func (api *TuShare) Forecast(params map[string]string, isVip bool) (*APIResponse, error) {
+	apiName := "forecast"
+	if !isVip {
+		// Check params
+		_, hasTsCode := params["ts_code"]
+		if !hasTsCode {
+			return nil, ERR_ARGUEMENT
+		}
+	} else {
+		apiName = "forecast_vip"
 	}
 
+	fields := []string{
+		"ts_code",
+		"ann_date",
+		"end_date",
+		"type",
+		"p_change_min",
+		"p_change_max",
+		"net_profit_min",
+		"net_profit_max",
+		"last_parent_net",
+		"first_ann_date",
+		"summary",
+		"change_reason",
+		"update_flag",
+	}
 	body := map[string]interface{}{
-		"api_name": "forecast",
+		"api_name": apiName,
 		"token":    api.token,
 		"params":   params,
 		"fields":   fields,
@@ -356,15 +373,55 @@ func (api *TuShare) Dividend(params map[string]string, fields []string) (*APIRes
 }
 
 // Express 获取上市公司业绩快报
-func (api *TuShare) Express(params map[string]string, fields []string) (*APIResponse, error) {
-	// Check params
-	_, hasTsCode := params["ts_code"]
-	if !hasTsCode {
-		return nil, ERR_ARGUEMENT
+func (api *TuShare) Express(params map[string]string, isVip bool) (*APIResponse, error) {
+	apiName := "express"
+	if !isVip {
+		// Check params
+		_, hasTsCode := params["ts_code"]
+		if !hasTsCode {
+			return nil, ERR_ARGUEMENT
+		}
+	} else {
+		apiName = "express_vip"
 	}
 
+	fields := []string{
+		"ts_code",
+		"ann_date",
+		"end_date",
+		"revenue",
+		"operate_profit",
+		"total_profit",
+		"n_income",
+		"total_assets",
+		"total_hldr_eqy_exc_min_int",
+		"diluted_eps",
+		"diluted_roe",
+		"yoy_net_profit",
+		"bps",
+		"yoy_sales",
+		"yoy_op",
+		"yoy_tp",
+		"yoy_dedu_np",
+		"yoy_eps",
+		"yoy_roe",
+		"growth_assets",
+		"yoy_equity",
+		"growth_bps",
+		"or_last_year",
+		"op_last_year",
+		"tp_last_year",
+		"np_last_year",
+		"eps_last_year",
+		"open_net_assets",
+		"open_bps",
+		"perf_summary",
+		"is_audit",
+		"remark",
+		"update_flag",
+	}
 	body := map[string]interface{}{
-		"api_name": "express",
+		"api_name": apiName,
 		"token":    api.token,
 		"params":   params,
 		"fields":   fields,

@@ -76,6 +76,7 @@ func TestStkMins(t *testing.T) {
 	params["end_date"] = "2009-04-11 00:27:11"
 	params["freq"] = "1min"
 	params["limit"] = "5"
+	params["offset"] = "5"
 	data, err := share.StkMins(params)
 	if err != nil {
 		t.Error(err)

@@ -1,7 +1,6 @@
 package self
 
 import (
-	"fmt"
 	"github.com/uiosun/go-tushare/client"
 	"testing"
 )
@@ -17,6 +16,5 @@ func TestIndexWeight(t *testing.T) {
 	}
 	if len(data.Data.Fields) != 4 {
 		t.Errorf("fields count not has %d pieces: %s", len(data.Data.Fields), data.Data.Fields)
-		fmt.Println(data.Data.Fields)
 	}
 }
