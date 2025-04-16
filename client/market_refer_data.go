@@ -68,13 +68,18 @@ func (api *TuShare) GgtTop10(params map[string]string, fields []string) (*APIRes
 }
 
 // Margin 获取融资融券每日交易汇总数据
-func (api *TuShare) Margin(params map[string]string, fields []string) (*APIResponse, error) {
-	// Check params
-	_, hasTsCode := params["trade_date"]
-	if !hasTsCode {
-		return nil, fmt.Errorf("trade_date is a required argument")
+func (api *TuShare) Margin(params map[string]string) (*APIResponse, error) {
+	fields := []string{
+		"trade_date",
+		"exchange_id",
+		"rzye",
+		"rzmre",
+		"rzche",
+		"rqye",
+		"rqmcl",
+		"rzrqye",
+		"rqyl",
 	}
-
 	body := map[string]interface{}{
 		"api_name": "margin",
 		"token":    api.token,
@@ -86,18 +91,36 @@ func (api *TuShare) Margin(params map[string]string, fields []string) (*APIRespo
 }
 
 // MarginDetail 获取沪深两市每日融资融券明细
-func (api *TuShare) MarginDetail(params map[string]string, fields []string) (*APIResponse, error) {
-	// Check params
-	_, hasTsCode := params["trade_date"]
-	if !hasTsCode {
-		return nil, fmt.Errorf("trade_date is a required argument")
+func (api *TuShare) MarginDetail(params map[string]string) (*APIResponse, error) {
+	fields := []string{
+		"trade_date",
+		"ts_code",
+		"name",
+		"rzye",
+		"rqye",
+		"rzmre",
+		"rqyl",
+		"rzche",
+		"rqchl",
+		"rqmcl",
+		"rzrqye",
 	}
-
 	body := map[string]interface{}{
 		"api_name": "margin_detail",
 		"token":    api.token,
 		"params":   params,
 		"fields":   fields,
+	}
+
+	return api.postData(body)
+}
+
+// MarginSecs 融资融券标的（盘前更新）
+func (api *TuShare) MarginSecs(params map[string]string) (*APIResponse, error) {
+	body := map[string]interface{}{
+		"api_name": "margin_secs",
+		"token":    api.token,
+		"params":   params,
 	}
 
 	return api.postData(body)
