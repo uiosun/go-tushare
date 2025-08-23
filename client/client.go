@@ -66,6 +66,7 @@ func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 		return nil, err
 	}
 	if resp.StatusCode != http.StatusOK {
+		fmt.Println(resp)
 		return nil, fmt.Errorf("net work error: %d", resp.StatusCode)
 	}
 	defer resp.Body.Close()
