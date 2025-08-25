@@ -77,11 +77,13 @@ func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 
 	var body []byte
 	if body, err = ioutil.ReadAll(resp.Body); err != nil {
+		fmt.Println("Body has error.")
 		return nil, err
 	}
 
 	var result *APIResponse
 	if err = json.Unmarshal(body, &result); err != nil {
+		fmt.Println("Body to Result has error.")
 		return nil, err
 	}
 
