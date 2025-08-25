@@ -66,21 +66,8 @@ func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 		return nil, err
 	}
 	if resp.StatusCode == http.StatusBadGateway {
-		waitSec := 1
-		for {
-			time.Sleep(time.Duration(waitSec) * time.Second)
-			waitSec *= 2
-			if resp, err = api.client.Do(req); err != nil {
-				if waitSec > 7 {
-					fmt.Println(resp)
-					return nil, fmt.Errorf("net work error: %d", resp.StatusCode)
-				} else {
-					fmt.Println("502 失败重试")
-				}
-			} else {
-				break
-			}
-		}
+		fmt.Println(resp)
+		return nil, fmt.Errorf("bad work error: %d", resp.StatusCode)
 	} else if resp.StatusCode != http.StatusOK {
 		fmt.Println(resp)
 		return nil, fmt.Errorf("net work error: %d", resp.StatusCode)
