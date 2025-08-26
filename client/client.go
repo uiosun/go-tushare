@@ -59,10 +59,20 @@ func (api *TuShare) request(method, path string, body interface{}) (*http.Reques
 
 func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 	req.Header.Set("Content-Type", "application/json")
+	var err error
+
+	// 读取原始body内容
+	bodyBytes, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer req.Body.Close()
+	req.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+	bodyCache := ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
 
 	var resp *http.Response
-	var err error
 	if resp, err = api.client.Do(req); err != nil {
+		fmt.Println("api.client.Do has error.", err, req)
 		return nil, err
 	}
 	if resp.StatusCode == http.StatusBadGateway {
@@ -95,9 +105,11 @@ func (api *TuShare) doRequest(req *http.Request) (*APIResponse, error) {
 	case 40203:
 		if api.config.AutoWaitRateLimit {
 			time.Sleep(api.config.AutoWaitRateLimitSec * time.Second)
+			req.Body = bodyCache
 			result, err := api.doRequest(req)
 			if err != nil {
-				return nil, err
+				fmt.Println("40203 retry is dead.")
+				return result, ERR_TOO_MANY_REQUESTS
 			}
 			return result, nil
 		}
@@ -115,10 +127,12 @@ func (api *TuShare) postData(body map[string]interface{}) (*APIResponse, error) 
 	}
 	req, err := api.request(PostMethod, Domain, body)
 	if err != nil {
+		println("Request has error.")
 		return nil, err
 	}
 	resp, err := api.doRequest(req)
 	if err != nil {
+		println("Do request has error.")
 		return resp, err
 	}
 	return resp, nil
